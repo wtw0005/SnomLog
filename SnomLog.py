@@ -49,23 +49,22 @@ def LogHandler(ActiveCalls,CallID,Reason):
         #If we have more than one active call this could indicate an issue or busy line
 
         if(Reason == "MissedCall"):
-            print("[X] Snom " + request.remote_addr + "Missed a call!")
+            print("[X] Snom " + request.remote_addr + " Missed a call!")
             f = open("LogEvents.txt","a")
-            f.write("[X] Snom " + request.remote_addr + "Missed a call!")
+            f.write("[X] Snom " + request.remote_addr + " Missed a call!\n")
             f.close()
 
         print("Active Calls: ",ActiveCalls)
         if(int(ActiveCalls) > 1):
             print("[X]Detected more than 1 active call collission?")
             f = open("LogEvents.txt","a")
-            f.write("[X]Possible Collission on call " + request.remote_addr)
+            f.write("[X]Possible Collission on call " + request.remote_addr + "\n")
             f.close()
-            
+
         #Resolve IP to host and timestamp calls
         print("Call ID:", CallID)
         f = open("LogEvents.txt", "a")
         schoolname = ""
-        print("Writing to Log")
         ctime = datetime.now()
         current_timestr = t.strftime("%H:%M:%S")
         if(request.remote_addr == "10.48.30.5"):
@@ -89,14 +88,14 @@ def LogHandler(ActiveCalls,CallID,Reason):
         else:
             schoolname = request.remote_addr
 
-        f.write(current_timestr + ": " + "Snom Activity: " + Reason + " " + schoolname+ ": " + request.remote_addr + "\n")
+        f.write(current_timestr + ": " + "Snom Activity: " + str(Reason) + " " + schoolname+ ": " + request.remote_addr + "\n")
         f.close()
 
         #Add the school and time of call to our dictionary to reference time between each call
         SnomStatus[schoolname] = ctime
         
      
-        print("Current Key Directory")
+        print("Status for All Snoms Updated:")
         for pair in SnomStatus.items():
             print(pair)
         return "Success"
