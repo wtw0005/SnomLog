@@ -45,14 +45,22 @@ def CheckUp():
 
     return True
 
-def LogHandler(ActiveCalls,CallID):
+def LogHandler(ActiveCalls,CallID,Reason):
         #If we have more than one active call this could indicate an issue or busy line
+
+        if(Reason == "MissedCall"):
+            print("[X] Snom " + request.remote_addr + "Missed a call!")
+            f = open("LogEvents.txt","a")
+            f.write("[X] Snom " + request.remote_addr + "Missed a call!")
+            f.close()
+
         print("Active Calls: ",ActiveCalls)
         if(int(ActiveCalls) > 1):
             print("[X]Detected more than 1 active call collission?")
             f = open("LogEvents.txt","a")
             f.write("[X]Possible Collission on call " + request.remote_addr)
             f.close()
+            
         #Resolve IP to host and timestamp calls
         print("Call ID:", CallID)
         f = open("LogEvents.txt", "a")
@@ -81,7 +89,7 @@ def LogHandler(ActiveCalls,CallID):
         else:
             schoolname = request.remote_addr
 
-        f.write(current_timestr + ": " + "Snom Received Call " + schoolname+ ": " + request.remote_addr + "\n")
+        f.write(current_timestr + ": " + "Snom Activity: " + Reason + " " + schoolname+ ": " + request.remote_addr + "\n")
         f.close()
 
         #Add the school and time of call to our dictionary to reference time between each call
@@ -98,7 +106,7 @@ def LogHandler(ActiveCalls,CallID):
 def LogSnom():
     print('Snom called')
     #Process Get Request with Parameters for Active Number of Calls and CallerID
-    Status = LogHandler(request.args.get('active', type=str),request.args.get('callid', type=str))
+    Status = LogHandler(request.args.get('active', type=str),request.args.get('callid', type=str),request.args.get('reason', type=str))
     #Do not add actual render page, the Snom tries to treat it like a settings file and dies. Super cool feature with no 
     return Response(status=200)
     
