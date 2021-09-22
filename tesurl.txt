@@ -1,0 +1,3 @@
+Test URL http://172.27.66.107:62420/LogInvite?active=something&callid=5
+
+Real URL http://172.27.66.107:62420/LogInvite?active=$nr_ongoing_calls&callid=$call-id

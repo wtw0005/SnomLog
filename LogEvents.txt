@@ -1,0 +1,5 @@
+11:16:42: Snom Activity, Received Call FHS Relay Snom 10.48.30.5
+11:19:51: Snom Activity, Received Call FHS Relay Snom 10.48.30.5
+11:29:48: Snom Activity, Received Call FHS Relay Snom 10.48.30.5
+11:39:49: Snom Activity, Received Call FHS Relay Snom 10.48.30.5
+11:44:49: Snom Activity, Received Call FHS Relay Snom 10.48.30.5
